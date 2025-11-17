@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع الأبحاث الأكاديمي</title>
+    
+    <!-- 1. Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- 3. Custom Font (Optional - Tailwind defaults to a nice sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Custom configuration for Tailwind to add the Arabic font
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Almarai', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    
+    <style>
+        /* A small style for smoother accordion transitions */
+        .accordion-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        
+        .accordion-content.open {
+            max-height: 500px; /* Adjust as needed */
+            padding-top: 1rem; /* 1rem = p-4 */
+            padding-bottom: 1rem; /* 1rem = p-4 */
+        }
+
+        /* Smooth rotation for the icon */
+        .accordion-toggle i {
+            transition: transform 0.3s ease-out;
+        }
+
+        .accordion-toggle.open i {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-800 to-blue-600 text-white shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-3">
+                دراسة تحليلية لظاهرة التركيز الاقتصادي
+            </h1>
+            <p class="text-lg text-blue-100 max-w-2xl mx-auto">
+                مرحباً بك في الأرشيف الرقمي لمشروع تخرجي. هذا الموقع يضم جميع الأبحاث والملفات المتعلقة بالمشروع.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <!-- App Container -->
+        <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-4xl mx-auto">
+            
+            <!-- Controls: Search and Sort -->
+            <div class="p-4 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row gap-4 justify-between items-center">
+                
+                <!-- Search Input -->
+                <div class="relative w-full sm:w-2/3">
+                    <span class="absolute start-3 top-1/2 -translate-y-1/2 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input 
+                        type="search" 
+                        id="search-input"
+                        placeholder="ابحث عن بحث معين..."
+                        class="w-full ps-10 pe-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    />
+                </div>
+                
+                <!-- Sort Dropdown -->
+                <div class="relative w-full sm:w-1/3">
+                    <select 
+                        id="sort-select"
+                        class="w-full appearance-none bg-white border border-gray-300 rounded-lg shadow-sm ps-4 pe-10 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                    >
+                        <option value="date-desc">الفرز: الأحدث أولاً</option>
+                        <option value="date-asc">الفرز: الأقدم أولاً</option>
+                        <option value="title-asc">الفرز: أبجدي (أ - ي)</option>
+                    </select>
+                    <span class="absolute end-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Accordion List Container -->
+            <div id="accordion-container" class="divide-y divide-gray-200">
+                <!-- JavaScript will populate this area -->
+                
+                <!-- Example of a loading/no results message -->
+                <div id="message-container" class="p-6 text-center text-gray-500 hidden">
+                    <p>لا توجد نتائج مطابقة لبحثك.</p>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="text-center py-6 text-gray-500 text-sm">
+        <p>© 2025 [اكتب اسمك هنا]. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <!-- JavaScript Section -->
+    <script>
+// ========================================================================
+// === بيانات الأبحاث - (المكان الوحيد الذي ستحتاج لتعديله) ===
+// ========================================================================
+// أضف ملفاتك الخاصة هنا. فقط انسخ أحد الكائنات (ما بين {}) وألصقه.
+// - title: عنوان البحث (يظهر في القائمة).
+// - description: وصف موجز للبحث.
+// - date: تاريخ النشر (تنسيق YYYY-MM-DD ليعمل الفرز بشكل صحيح).
+// - link: رابط ملف PDF الخاص بك (من جوجل درايف أو أي مكان آخر).
+// ========================================================================
+
+const papersData = [
+    {
+        title: "ملخص الرسالة: الإطار القانوني للتركيز الاقتصادي في التشريع المغربي",
+        description: "دراسة تحليلية للإطار القانوني لعمليات التركيز الاقتصادي في المغرب (القانون 104.12)، وتوضيح كيفية الموازنة بين تحقيق النمو الاقتصادي والحفاظ على المنافسة الشريفة، مع التركيز على دور مجلس المنافسة.",
+        date: "2025-05-10", // <-- تاريخ مقترح، يمكنك تعديله
+        link: "https://drive.google.com/open?id=1ueOgHAxtZKD1MshMoVzla_SGcfz2wRgj"
+    },
+    {
+        title: "تقرير مشروع القانون رقم 40.21",
+        description: "تقرير مفصل حول مشروع القانون 40.21 وتأثيراته المتوقعة. (يرجى إضافة وصفك الخاص هنا)",
+        date: "2025-04-20", // <-- تاريخ مقترح، يمكنك تعديله
+        link: "https://drive.google.com/open?id=1YnuqGjBQ3SFPMjPCjgB2lGmG7BYLiOOB"
+    }
+];
+
+// ========================================================================
+// === الكود الخاص بتشغيل الموقع (لا تحتاج لتعديل ما هو أدناه) ===
+// ========================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Get references to DOM elements
+    const accordionContainer = document.getElementById('accordion-container');
+    const searchInput = document.getElementById('search-input');
+    const sortSelect = document.getElementById('sort-select');
+    const messageContainer = document.getElementById('message-container');
+
+    // Function to render the list of papers
+    function renderPapers(papers) {
+        // Clear the existing list
+        accordionContainer.innerHTML = ''; 
+        
+        if (papers.length === 0) {
+            // Show a "no results" message
+            messageContainer.classList.remove('hidden');
+        } else {
+            messageContainer.classList.add('hidden');
+        }
+
+        // Create HTML for each paper
+        papers.forEach(paper => {
+            const paperElement = document.createElement('div');
+            paperElement.className = 'border-b border-gray-200'; // Container for each item
+            
+            paperElement.innerHTML = `
+                <!-- Accordion Toggle Button -->
+                <button class="accordion-toggle w-full flex justify-between items-center p-4 text-start hover:bg-gray-50 focus:outline-none">
+                    <span class="text-lg font-semibold text-blue-700">${paper.title}</span>
+                    <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
+                </button>
+                
+                <!-- Accordion Content (Hidden by default) -->
+                <div class="accordion-content px-4">
+                    <p class="text-gray-700 mb-4">${paper.description}</p>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            تاريخ: ${paper.date}
+                        </span>
+                        <a 
+                            href="${paper.link}" 
+                            target="_blank" 
+                            class="inline-block bg-blue-600 text-white font-bold px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-0.5"
+                        >
+                            <i class="fas fa-file-pdf me-2"></i>
+                            قراءة البحث
+                        </a>
+                    </div>
+                </div>
+            `;
+            accordionContainer.appendChild(paperElement);
+        });
+
+        // Add click listeners to the *newly created* accordion buttons
+        addAccordionListeners();
+    }
+
+    // Function to add click listeners to accordion toggles
+    function addAccordionListeners() {
+        document.querySelectorAll('.accordion-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                
+                // Toggle the 'open' class
+                button.classList.toggle('open');
+                content.classList.toggle('open');
+            });
+        });
+    }
+
+    // Function to update the display based on search and sort
+    function updateDisplay() {
+        const query = searchInput.value.toLowerCase();
+        const sortBy = sortSelect.value;
+
+        // 1. Filter the papers based on the search query
+        const filteredPapers = papersData.filter(paper => 
+            paper.title.toLowerCase().includes(query) || 
+            paper.description.toLowerCase().includes(query)
+        );
+
+        // 2. Sort the filtered papers
+        let sortedPapers = [...filteredPapers]; // Create a new array
+        
+        switch (sortBy) {
+            case 'date-desc':
+                sortedPapers.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            case 'date-asc':
+                sortedPapers.sort((a, b) => new Date(a.date) - new Date(b.date));
+                break;
+            case 'title-asc':
+                sortedPapers.sort((a, b) => a.title.localeCompare(b.title, 'ar')); // 'ar' for Arabic-aware sorting
+                break;
+        }
+
+        // 3. Re-render the list with the sorted and filtered data
+        renderPapers(sortedPapers);
+    }
+
+    // Initial Setup
+    // Add event listeners
+    searchInput.addEventListener('input', updateDisplay);
+    sortSelect.addEventListener('change', updateDisplay);
+
+    // Initial render on page load
+    updateDisplay(); 
+});
+
+    </script>
+</body>
+</html>
