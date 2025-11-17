@@ -61,7 +61,7 @@
     <header class="bg-gradient-to-r from-blue-800 to-blue-600 text-white shadow-md">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
             <h1 class="text-3xl md:text-4xl font-bold mb-3">
-                دراسة تحليلية لظاهرة التركيز الاقتصادي
+                دراسات تقارير سنوية لمجلس المنافسة المغربي | المصادر
             </h1>
             <p class="text-lg text-blue-100 max-w-2xl mx-auto">
                 مرحباً بك في الأرشيف الرقمي لمشروع تخرجي. هذا الموقع يضم جميع الأبحاث والملفات المتعلقة بالمشروع.
@@ -71,6 +71,22 @@
 
     <!-- Main Content -->
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- Sources Section -->
+        <section class="max-w-4xl mx-auto mb-6">
+            <div class="bg-white rounded-lg shadow-md border border-gray-200">
+                <div class="px-4 sm:px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-blue-800 flex items-center gap-2">
+                        <i class="fa-solid fa-folder-open text-blue-600"></i>
+                        المصادر (Council Sources)
+                    </h2>
+                    <span class="text-xs text-gray-400">قائمة سريعة بروابط الملفات</span>
+                </div>
+                <div id="sources-container" class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- سيتم توليد الروابط هنا عبر JavaScript -->
+                </div>
+            </div>
+        </section>
         
         <!-- App Container -->
         <div class="bg-white rounded-lg shadow-xl overflow-hidden max-w-4xl mx-auto">
@@ -137,6 +153,22 @@
 // - link: رابط ملف PDF الخاص بك (من جوجل درايف أو أي مكان آخر).
 // ========================================================================
 
+// مصادر المجلس (تظهر كرابط مختصر أعلى الصفحة)
+const sourcesList = [
+  { name: "ملخص الرسالة: الإطار القانوني للتركيز الاقتصادي في التشريع المغربي", link: "https://drive.google.com/open?id=1ueOgHAxtZKD1MshMoVzla_SGcfz2wRgj" },
+  { name: "تقرير مشروع القانون رقم 40.21", link: "https://drive.google.com/open?id=1YnuqGjBQ3SFPMjPCjgB2lGmG7BYLiOOB" },
+  { name: "مصطلحات قانون المنافسة (عربية - فرنسية).pdf", link: "https://drive.google.com/file/d/1b4LE1w4SE_Q-B8qT9DQG6EvFWvsDY4jZ/view?usp=drive_link" },
+  { name: "رأي مجلس المنافسة حول مشروع قرار الحكومة بشأن تسقيف هوامش ربح المحروقات السائلة", link: "https://drive.google.com/file/d/1oeNRxHDg7bJAj7_BwPtH-_v6bHhKinVP/view" },
+  { name: "دليل إعداد برامج الملاءمة مع قانون المنافسة داخل المنشآت والمنظمات المهنية", link: "https://drive.google.com/file/d/1fGLqG63VmCjWVWZr1_c17-rULOqNWm7b/view?usp=drive_link" },
+  { name: "دراسة حول حالة المنافسة في قطاع الهاتف النقال.pdf", link: "https://drive.google.com/file/d/1TP25dB7-qbai8LunZcB6LFPupUBkYn7u/view?usp=drive_link" },
+  { name: "تقرير تتبع تنفيذ التعهدات المتخذة ... الربع الأول 2024", link: "https://drive.google.com/file/d/1WmEvBcPE3RxRUUVdMYtmpq5_dumPovqU/view?usp=drive_link" },
+  { name: "المبادئ التوجيهية لعمليات التركيز.pdf", link: "https://drive.google.com/file/d/1EqNrM7pIUNqIS1IyAjRkzoEGi1vDeX6R/view?usp=drive_link" },
+  { name: "التقرير السنوي 2024.pdf", link: "https://drive.google.com/file/d/1G91sYrBvJ97CbB8TWleIPrwBPEKwMaGx/view?usp=drive_link" },
+  { name: "التقرير السنوي 2023.pdf", link: "https://drive.google.com/file/d/1LzQhCqtVcxB2zlOwWQuADg1Y8VPJmopL/view?usp=drive_link" },
+  { name: "التقرير السنوي 2022.pdf", link: "https://drive.google.com/file/d/16ID54_UmYTdSW0dw4rVk7_kWhEhbJYIw/view?usp=drive_link" },
+  { name: "التقرير السنوي 2021.pdf", link: "https://drive.google.com/file/d/1qD8RYNC31d_fgYxtd4v3qVK4FGW-Cf5C/view?usp=drive_link" },
+];
+
 const papersData = [
     {
         title: "ملخص الرسالة: الإطار القانوني للتركيز الاقتصادي في التشريع المغربي",
@@ -149,6 +181,67 @@ const papersData = [
         description: "تقرير مفصل حول مشروع القانون 40.21 وتأثيراته المتوقعة. (يرجى إضافة وصفك الخاص هنا)",
         date: "2025-04-20", // <-- تاريخ مقترح، يمكنك تعديله
         link: "https://drive.google.com/open?id=1YnuqGjBQ3SFPMjPCjgB2lGmG7BYLiOOB"
+    }
+,
+    {
+        title: "مصطلحات قانون المنافسة (عربية – فرنسية)",
+        description: "وثيقة صادرة عن مجلس المنافسة (CONSEIL DE LA CONCURRENCE) في المملكة المغربية، تحتوي على جدول يضم مصطلحات متخصصة في قانون المنافسة، مع مقابلها باللغتين العربية والفرنسية، بالإضافة إلى بعض الملاحظات أو الشروحات المختصرة لبعض المصطلحات",
+        date: "2025-04-25",
+        link: "https://drive.google.com/file/d/1b4LE1w4SE_Q-B8qT9DQG6EvFWvsDY4jZ/view?usp=drive_link"
+    },
+    {
+        title: "رأي مجلس المنافسة حول مشروع قرار الحكومة بشأن تسقيف هوامش ربح المحروقات السائلة",
+        description: "هو رأي صادر عن مجلس المنافسة المغربي بشأن مشروع قرار للحكومة يهدف إلى إدراج أسعار المحروقات السائلة ضمن قائمة السلع والمنتوجات والخدمات المنظمة أسعارها بشكل مؤقت، أي تسقيف هوامش ربحها. يتضمن الرأي تحليل المجلس لشرعية وفعالية وجدوى هذا الإجراء في إطار القانون 104.12 المتعلق بحرية الأسعار والمنافسة، ويخلص إلى أن شروط تطبيق التدابير المؤقتة (المادة 4) غير مستوفاة وأن التسقيف غير كاف وغير مجدٍ. كما يقدم المجلس توصيات بديلة لمعالجة المشاكل البنيوية في سوق المحروقات (كتطوير المنافسة على مستوى التكرير والتخزين والتوزيع، وإخضاع السوق لآلية مبتكرة للنظامة القطاعية).",
+        date: "2025-04-30",
+        link: "https://drive.google.com/file/d/1oeNRxHDg7bJAj7_BwPtH-_v6bHhKinVP/view"
+    },
+    {
+        title: "دليل إعداد برامج الملاءمة مع قانون المنافسة داخل المنشآت والمنظمات المهنية",
+        description: "هو دليل صادر عن مجلس المنافسة المغربي يهدف إلى توجيه المنشآت والمنظمات المهنية لوضع برامج داخلية للملاءمة والامتثال لقواعد قانون المنافسة (القانون رقم 104.12 والقانون رقم 20.13 والنصوص التطبيقية لهما). يركز الدليل على المقاربة الاستباقية والوقائية لتفادي مخاطر خرق القواعد التنافسية. ويتضمن المكونات الرئيسية لبرنامج الملاءمة (التزامات الإدارة، تعيين مخاطبين، وثيقة إطار، إعلام وتكوين، تحديد المخاطر والتحكم فيها)، وآليات المراقبة (التتبع والإنذار وتدابير الانضباط الداخلي). كما يحدد الدليل المجالات المعرضة للأخطار التنافسية (الاتفاقات المنافية، الاستغلال التعسفي لوضع مهيمن أو تبعية اقتصادية، عمليات التركيز الاقتصادي) ويوضح كيفية تدبيرها، بالإضافة إلى تذكير بالعقوبات المترتبة عن الإخلال بقواعد المنافسة.",
+        date: "2025-04-29",
+        link: "https://drive.google.com/file/d/1fGLqG63VmCjWVWZr1_c17-rULOqNWm7b/view?usp=drive_link"
+    },
+    {
+        title: "دراسة حول حالة المنافسة في قطاع الهاتف النقال - تقرير تركيبي (نسخة ماي 2011)",
+        description: "تقرير تركيبي صادر عن مجلس المنافسة المغربي في ماي 2011، يتناول بالدراسة والتحليل حالة المنافسة في قطاع الهاتف النقال بالمغرب",
+        date: "2011-05-01",
+        link: "https://drive.google.com/file/d/1TP25dB7-qbai8LunZcB6LFPupUBkYn7u/view?usp=drive_link"
+    },
+    {
+        title: "تقرير تتبع تنفيذ التعهدات المتخذة من لدن شركات توزيع الغازوال والبنزين بالجملة في إطار اتفاقات الصلح المبرمة مع مجلس المنافسة برسم الربع الأول من 2024",
+        description: "تقرير صادر عن مجلس المنافسة المغربي يتناول تتبع تنفيذ التعهدات التي التزمت بها تسع شركات لتوزيع الغازوال والبنزين بالجملة ضمن اتفاقات الصلح المبرمة مع المجلس، وذلك خلال الربع الأول من عام 2024.",
+        date: "2024-03-31",
+        link: "https://drive.google.com/file/d/1WmEvBcPE3RxRUUVdMYtmpq5_dumPovqU/view?usp=drive_link"
+    },
+    {
+        title: "المبادئ التوجيهية المتعلقة بمراقبة عمليات التركيز الاقتصادي (دجنبر 2023)",
+        description: "هذه الوثيقة هي المبادئ التوجيهية الصادرة عن مجلس المنافسة المغربي في دجنبر 2023، والتي تهدف إلى توفير تفاصيل بشأن سيرورة دراسة عمليات التركيز الاقتصادي ومراقبتها، سواء من حيث المسطرة المتبعة أو من حيث المضمون",
+        date: "2023-12-15",
+        link: "https://drive.google.com/file/d/1EqNrM7pIUNqIS1IyAjRkzoEGi1vDeX6R/view?usp=drive_link"
+    },
+    {
+        title: "التقرير السنوي لمجلس المنافسة 2024",
+        description: "هو التقرير السنوي الذي أصدره مجلس المنافسة المغربي برسم سنة 2024",
+        date: "2024-12-31",
+        link: "https://drive.google.com/file/d/1G91sYrBvJ97CbB8TWleIPrwBPEKwMaGx/view?usp=drive_link"
+    },
+    {
+        title: "التقرير السنوي لمجلس المنافسة 2023",
+        description: "هو التقرير السنوي لمجلس المنافسة المغربي برسم سنة 2023، والذي تم تقديمه إلى صاحب الجلالة الملك محمد السادس. يتناول التقرير وضعية المنافسة على الصعيدين الدولي والوطني، وحصيلة أنشطة المجلس لعام 2023.",
+        date: "2023-12-31",
+        link: "https://drive.google.com/file/d/1LzQhCqtVcxB2zlOwWQuADg1Y8VPJmopL/view?usp=drive_link"
+    },
+    {
+        title: "التقرير السنوي 2022 لمجلس المنافسة",
+        description: "هو التقرير السنوي الذي أصدره مجلس المنافسة المغربي برسم سنة 2022، وتم رفعه إلى الملك محمد السادس. يستعرض التقرير وضعية المنافسة على الصعيدين الدولي والوطني، وحصيلة أنشطة المجلس خلال هذه السنة التي تميزت بسياق عالمي مطبوع بعدم اليقين والتوترات الجيوسياسية والتضخم.",
+        date: "2022-12-31",
+        link: "https://drive.google.com/file/d/16ID54_UmYTdSW0dw4rVk7_kWhEhbJYIw/view?usp=drive_link"
+    },
+    {
+        title: "التقرير السنوي لمجلس المنافسة 2021",
+        description: "هو التقرير السنوي لمجلس المنافسة المغربي برسم سنة 2021، والمرفوع إلى الملك محمد السادس من لدن رئيس المجلس أحمد رحو. يستعرض التقرير وضعية المنافسة على الصعيدين الدولي والوطني وحصيلة أنشطة المجلس خلال هذه السنة.",
+        date: "2021-12-31",
+        link: "https://drive.google.com/file/d/1qD8RYNC31d_fgYxtd4v3qVK4FGW-Cf5C/view?usp=drive_link"
     }
 ];
 
@@ -264,6 +357,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial render on page load
     updateDisplay(); 
+
+    // Render sources list
+    const sourcesContainer = document.getElementById('sources-container');
+    if (sourcesContainer && Array.isArray(sourcesList)) {
+        sourcesContainer.innerHTML = '';
+        sourcesList.forEach((src) => {
+            const a = document.createElement('a');
+            a.href = src.link;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50/50 transition';
+            a.innerHTML = `<i class="fa-solid fa-file-pdf text-blue-600"></i><span class="truncate">${src.name}</span>`;
+            sourcesContainer.appendChild(a);
+        });
+    }
 });
 
     </script>
